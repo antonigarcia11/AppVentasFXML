@@ -1,0 +1,26 @@
+.table-view {
+    -fx-base: #E2E5F2;
+    -fx-control-inner-background: #E2E5F2;
+    -fx-background-color: #E2E5F2;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+.background {
+    -fx-background-color: #B8C4F5;
+}
+.split-pane:horizontal > .split-pane-divider {
+    -fx-border-color: transparent #1d1d1d transparent #B8C4F5;
+    -fx-background-color: transparent, derive(#B8C4F5,20%);
+}
+
+.split-pane {
+    -fx-padding: 1 0 0 0;
+}
