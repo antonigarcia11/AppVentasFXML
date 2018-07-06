@@ -73,17 +73,7 @@ public class ProductoController implements Initializable{
        colPrecioUnidad.setCellValueFactory(cellData->cellData.getValue().precioUnitario());
        colExistencias.setCellValueFactory(cellData->cellData.getValue().existencias());
     }
-    public void nuevo(){
-       txtDescripcion.setDisable(false);
-        txtExistencias.setDisable(false);
-        txtPrecio.setDisable(false);
-        txtPrecioUnitario.setDisable(false);
-        
-        btnNuevo.setDisable(true);
-        btnGuardar.setDisable(false);
-        btnCancelar.setDisable(false);
-        btnEliminar.setDisable(true);
-    }
+    
     public void guardar(){
         try {
             Producto producto = new Producto();
