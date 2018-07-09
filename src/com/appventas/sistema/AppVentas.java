@@ -23,8 +23,9 @@ public class AppVentas extends Application {
         this.escenarioPrincipal = escenarioPrincipal;
 
        //mostrarHelloWorld();
+        mostrarCategoria();
+        //mostrarProducto();
         //mostrarCategoria();
-        mostrarProducto();
         this.escenarioPrincipal.setTitle("Ventas");
         this.escenarioPrincipal.show();
     }

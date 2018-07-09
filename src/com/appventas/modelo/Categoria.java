@@ -37,7 +37,8 @@ public class Categoria implements Serializable{
         
     @Override
     public String toString(){
-        return "Categoria{" + "codigoCategoria=" + codigoCategoria.get() + ", descripcion=" + descripcion.get() + '}';
+        //return "Categoria{" + "codigoCategoria=" + codigoCategoria.get() + ", descripcion=" + descripcion.get() + '}';
+        return codigoCategoria.get() + " | " + descripcion.get();
     }
     
     @Id

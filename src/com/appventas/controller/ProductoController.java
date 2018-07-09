@@ -87,32 +87,35 @@ public class ProductoController implements Initializable{
     public void guardar(){
         try {
             Producto producto = new Producto();
-            for (Categoria categoria: listaCategorias)
+            if(cbxCategorias.getSelectionModel().getSelectedItem() == null){
+                JOptionPane.showMessageDialog(null,"Debe seleccionar una categoria");
+            }else if(txtDescripcion.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null,"Debe ingresar una descripción");
+            }else{
+                producto.setCategoria((Categoria)cbxCategorias.getSelectionModel().getSelectedItem());            
+                producto.setDescripcion(txtDescripcion.getText());
+                producto.setPrecio(Integer.parseInt(txtPrecio.getText()));
+                producto.setExistencias(Integer.parseInt(txtExistencias.getText()));
+                producto.setPrecioUnitario(Double.parseDouble(txtPrecioUnitario.getText()));
+                productoDao.saveProducto(producto);
+                listaProductos.add(producto);
+                txtDescripcion.setDisable(true);
+                txtDescripcion.setText("");
+                txtExistencias.setText("");
+                txtExistencias.setDisable(true);
+                txtPrecioUnitario.setText("");
+                txtPrecioUnitario.setDisable(true);
+                txtPrecio.setText("");
+                txtPrecio.setDisable(true);
+                btnNuevo.setDisable(false);
+                btnGuardar.setDisable(true);
+                btnCancelar.setDisable(true);
+                btnEliminar.setDisable(false);
+            }
+            /*for (Categoria categoria: listaCategorias)
                 if (categoria.getDescripcion().equals(cbxCategorias.getSelectionModel().getSelectedItem())){
                     producto.setCategoria(categoria);
-                }
-            
-            
-            producto.setDescripcion(txtDescripcion.getText());
-            producto.setPrecio(Integer.parseInt(txtPrecio.getText()));
-            producto.setExistencias(Integer.parseInt(txtExistencias.getText()));
-            producto.setPrecioUnitario(Double.parseDouble(txtPrecioUnitario.getText()));
-           
-            productoDao.saveProducto(producto);
-            listaProductos.add(producto);
-            txtDescripcion.setDisable(true);
-            txtDescripcion.setText("");
-        
-            txtExistencias.setText("");
-            txtExistencias.setDisable(true);
-            txtPrecioUnitario.setText("");
-            txtPrecioUnitario.setDisable(true);
-            txtPrecio.setText("");
-            txtPrecio.setDisable(true);
-            btnNuevo.setDisable(false);
-            btnGuardar.setDisable(true);
-            btnCancelar.setDisable(true);
-            btnEliminar.setDisable(false);
+                }*/            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -153,9 +156,10 @@ public class ProductoController implements Initializable{
     }
 
     private void mostrarCategorias() {
-        listaCategorias= FXCollections.observableArrayList(categoriaDao.findAllCategoria());
-        listaDescripciones= FXCollections.observableArrayList(listaCategorias.stream().map(categoria->categoria.getDescripcion()).collect(Collectors.toList()));
-        cbxCategorias.setItems(listaDescripciones);
+        listaCategorias= FXCollections.observableArrayList(categoriaDao.findAllCategoria());        
+        //listaDescripciones= FXCollections.observableArrayList(listaCategorias.stream().map(categoria->categoria.getDescripcion()).collect(Collectors.toList()));
+        //cbxCategorias.setItems(listaDescripciones);
+        cbxCategorias.setItems(listaCategorias);
     }
 }
   

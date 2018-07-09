@@ -25,7 +25,7 @@ import javax.persistence.Table;
 public class Producto implements Serializable {
     private IntegerProperty codigoProducto;
     private final StringProperty descripcion;
-    private final IntegerProperty precio;
+    private final DoubleProperty precio;
     private final DoubleProperty precioUnitario;
     private final IntegerProperty existencias;
     
@@ -34,14 +34,14 @@ public class Producto implements Serializable {
     public Producto(){
         this.codigoProducto = new SimpleIntegerProperty();
         this.descripcion = new SimpleStringProperty("");
-        this.precio = new SimpleIntegerProperty();
+        this.precio = new SimpleDoubleProperty();
         this.precioUnitario = new SimpleDoubleProperty();
         this.existencias = new SimpleIntegerProperty();
     }
     public Producto(int codigoProducto, String descripcion, int precio, double precioUnitario, int existencias, Categoria categoria){
         this.codigoProducto = new SimpleIntegerProperty(codigoProducto);
          this.descripcion = new SimpleStringProperty (descripcion);
-        this.precio = new SimpleIntegerProperty(precio);
+        this.precio = new SimpleDoubleProperty(precio);
         this.precioUnitario = new SimpleDoubleProperty(precioUnitario);
         this.existencias = new SimpleIntegerProperty(existencias);
         this.categoria = categoria;
@@ -77,7 +77,7 @@ public class Producto implements Serializable {
     }
     
     @Column(name = "precio")
-    public int getPrecio(){
+    public double getPrecio(){
         return precio.get();
     }
     
@@ -85,7 +85,7 @@ public class Producto implements Serializable {
         this.precio.set(precio);
     }
     
-    public IntegerProperty precio(){
+    public DoubleProperty precio(){
         return precio;
     }
     
