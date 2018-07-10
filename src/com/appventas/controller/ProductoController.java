@@ -3,20 +3,16 @@ package com.appventas.controller;
 
 
 import com.appventas.dao.CategoriaDaoImpl;
-import com.appventas.dao.ProductoDao;
 import com.appventas.dao.ProductoDaoImpl;
 import com.appventas.modelo.Categoria;
 import com.appventas.modelo.Producto;
 import java.net.URL;
-import java.util.Observable;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -25,7 +21,7 @@ import javax.swing.JOptionPane;
 
 
 public class ProductoController implements Initializable{
-    
+    private enum ACCIONES {NUEVO,EDITAR};
     @FXML private TableView<Producto> tblProducto;
     @FXML private TableColumn<Producto, Number> colCodigoProducto;
     @FXML private TableColumn<Producto, Number> colPrecio;
@@ -34,12 +30,13 @@ public class ProductoController implements Initializable{
     @FXML private TableColumn<Producto, Number> colPrecioUnidad;
     @FXML private TableColumn<Producto, Number> colExistencias;
     
-   @FXML private ComboBox cbxCategorias;
+    @FXML private ComboBox cbxCategorias;
     
     @FXML private Button btnNuevo;
     @FXML private Button btnGuardar;
     @FXML private Button btnCancelar;
     @FXML private Button btnEliminar;
+    @FXML private Button btnEditar;
     
     @FXML private TextField txtPrecio;
     @FXML private TextField txtDescripcion;
@@ -52,7 +49,9 @@ public class ProductoController implements Initializable{
     
     private ProductoDaoImpl productoDao = new ProductoDaoImpl();
     private CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
-    
+    private ACCIONES accion;
+    private Producto elementoSeleccionado;
+   
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         getProductos();
@@ -60,6 +59,17 @@ public class ProductoController implements Initializable{
         enlazarColumnas();
         mostrarCategorias();
     }
+    
+    public void seleccionarElemento(){
+        if(tblProducto.getSelectionModel().getSelectedItem() != null){
+            elementoSeleccionado = tblProducto.getSelectionModel().getSelectedItem();
+            txtDescripcion.setText(elementoSeleccionado.getDescripcion());
+            txtPrecio.setText(String.valueOf(elementoSeleccionado.getPrecio()));
+            txtPrecioUnitario.setText(String.valueOf(elementoSeleccionado.getPrecioUnitario()));
+            txtExistencias.setText(Integer.toString(elementoSeleccionado.getExistencias()));
+            cbxCategorias.setValue(elementoSeleccionado.getCategoria());
+        }
+    }    
     
     public void enlazarDatos() {
         tblProducto.setItems(listaProductos);
@@ -73,40 +83,67 @@ public class ProductoController implements Initializable{
        colPrecioUnidad.setCellValueFactory(cellData->cellData.getValue().precioUnitario());
        colExistencias.setCellValueFactory(cellData->cellData.getValue().existencias());
     }
-    
-    public void guardar(){
-        try {
-            Producto producto = new Producto();
-            for (Categoria categoria: listaCategorias)
-                if (categoria.getDescripcion().equals(cbxCategorias.getSelectionModel().getSelectedItem())){
-                    producto.setCategoria(categoria);
-                }
-            
-            
-            producto.setDescripcion(txtDescripcion.getText());
-            producto.setPrecio(Integer.parseInt(txtPrecio.getText()));
-            producto.setExistencias(Integer.parseInt(txtExistencias.getText()));
-            producto.setPrecioUnitario(Double.parseDouble(txtPrecioUnitario.getText()));
-           
-            productoDao.saveProducto(producto);
-            listaProductos.add(producto);
-            txtDescripcion.setDisable(true);
-            txtDescripcion.setText("");
+    public void nuevo(){
+        txtDescripcion.setDisable(false);
+        txtExistencias.setDisable(false);
+        txtPrecio.setDisable(false);
+        txtPrecioUnitario.setDisable(false);
         
-            txtExistencias.setText("");
-            txtExistencias.setDisable(true);
-            txtPrecioUnitario.setText("");
-            txtPrecioUnitario.setDisable(true);
-            txtPrecio.setText("");
-            txtPrecio.setDisable(true);
-            btnNuevo.setDisable(false);
-            btnGuardar.setDisable(true);
-            btnCancelar.setDisable(true);
-            btnEliminar.setDisable(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        btnNuevo.setDisable(true);
+        btnGuardar.setDisable(false);
+        btnCancelar.setDisable(false);
+        btnEliminar.setDisable(true);
+        btnEditar.setDisable(true);
+        cbxCategorias.setDisable(false);
+        accion = ACCIONES.NUEVO;
     }
+    public void guardar(){
+        if(cbxCategorias.getSelectionModel().getSelectedItem() == null){
+                JOptionPane.showMessageDialog(null,"Debe seleccionar una categoria");
+        }else if(txtDescripcion.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null,"Debe ingresar una descripción");
+            }else{
+                try {
+                    switch(accion){ 
+                        case NUEVO:
+                                Producto producto = new Producto();
+                                producto.setCategoria((Categoria)cbxCategorias.getSelectionModel().getSelectedItem());            
+                                producto.setDescripcion(txtDescripcion.getText());
+                                producto.setPrecio(Double.parseDouble(txtPrecio.getText()));
+                                producto.setExistencias(Integer.parseInt(txtExistencias.getText()));
+                                producto.setPrecioUnitario(Double.parseDouble(txtPrecioUnitario.getText()));
+                                productoDao.saveProducto(producto);
+                                listaProductos.add(producto);
+                                break;
+                        case EDITAR:
+                                elementoSeleccionado.setDescripcion(txtDescripcion.getText());
+                                elementoSeleccionado.setCategoria((Categoria)cbxCategorias.getSelectionModel().getSelectedItem());
+                                elementoSeleccionado.setPrecio(Double.parseDouble(txtPrecio.getText()));
+                                elementoSeleccionado.setExistencias(Integer.parseInt(txtExistencias.getText()));
+                                elementoSeleccionado.setPrecioUnitario(Double.parseDouble(txtPrecioUnitario.getText()));
+                                productoDao.saveProducto(elementoSeleccionado);
+                                listaProductos.set(tblProducto.getSelectionModel().getSelectedIndex(),elementoSeleccionado);
+                    }
+                    txtDescripcion.setDisable(true);
+                    txtDescripcion.setText("");
+                    txtExistencias.setText("");
+                    txtExistencias.setDisable(true);
+                    txtPrecioUnitario.setText("");
+                    txtPrecioUnitario.setDisable(true);
+                    txtPrecio.setText("");
+                    txtPrecio.setDisable(true);
+                    btnNuevo.setDisable(false);
+                    btnGuardar.setDisable(true);
+                    btnCancelar.setDisable(true);
+                    btnEliminar.setDisable(false);
+                    btnEditar.setDisable(false);
+                    cbxCategorias.getSelectionModel().clearSelection();
+                    cbxCategorias.setDisable(true);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+    }        
     public void cancelar(){
         txtDescripcion.setText("");
         txtDescripcion.setDisable(true);
@@ -116,12 +153,15 @@ public class ProductoController implements Initializable{
         txtPrecioUnitario.setDisable(true);
         txtPrecio.setText("");
         txtPrecio.setDisable(true);
+        cbxCategorias.getSelectionModel().clearSelection();
+        cbxCategorias.setDisable(true);
         
         
         btnNuevo.setDisable(false);
         btnGuardar.setDisable(true);
         btnCancelar.setDisable(true);
         btnEliminar.setDisable(false);
+        btnEditar.setDisable(false);
     }
     
     public void eliminar(){
@@ -135,7 +175,6 @@ public class ProductoController implements Initializable{
         }else{
             JOptionPane.showMessageDialog(null,"Debe seleccionar un elemento");
         }
-        
     }
 
     public void getProductos() {
@@ -143,13 +182,27 @@ public class ProductoController implements Initializable{
     }
 
     private void mostrarCategorias() {
-        listaCategorias= FXCollections.observableArrayList(categoriaDao.findAllCategoria());
-        listaDescripciones= FXCollections.observableArrayList(listaCategorias.stream().map(categoria->categoria.getDescripcion()).collect(Collectors.toList()));
-        cbxCategorias.setItems(listaDescripciones);
+        listaCategorias= FXCollections.observableArrayList(categoriaDao.findAllCategoria());        
+        cbxCategorias.setItems(listaCategorias);
+    }
+    public void modificar (){
+        if(tblProducto.getSelectionModel().getSelectedItem() !=null){
+            
+            txtDescripcion.setDisable(false);
+            txtPrecio.setDisable(false);
+            txtPrecioUnitario.setDisable(false);
+            txtExistencias.setDisable(false);
+            
+            cbxCategorias.setDisable(false);
+            btnNuevo.setDisable(true);
+            btnEliminar.setDisable(true);
+            btnEditar.setDisable(false);
+            btnGuardar.setDisable(false);
+            btnCancelar.setDisable(false);
+            accion = ACCIONES.EDITAR;
+        }else{
+            JOptionPane.showMessageDialog(null,"Debe seleccionar un elemento");
+        }
     }
 }
-
-
-
-/*PROBANDO SUBIR EL REPOSITORIO A GIT HUB*/
   

@@ -33,6 +33,7 @@
       <Label layoutX="302.0" layoutY="57.0" text="Precio Unitario" />
       <TextField fx:id="txtPrecioUnitario" disable="true" layoutX="409.0" layoutY="46.0" prefHeight="25.0" prefWidth="128.0" />
       <Label layoutX="303.0" layoutY="94.0" text="Categorias" />
-      <ComboBox fx:id="cbxCategorias" layoutX="409.0" layoutY="82.0" prefHeight="25.0" prefWidth="128.0" />
+      <ComboBox fx:id="cbxCategorias" disable="true" layoutX="409.0" layoutY="82.0" prefHeight="25.0" prefWidth="128.0" />
+      <Button fx:id="btnEditar" layoutX="381.0" layoutY="361.0" mnemonicParsing="false" onAction="#modificar" onKeyReleased="#seleccionarElemento" onMouseClicked="#seleccionarElemento" text="Modificar" />
    </children>
 </AnchorPane>

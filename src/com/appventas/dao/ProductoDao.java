@@ -11,5 +11,4 @@ public interface ProductoDao {
     public void saveProducto (Producto elemento);
     public void deleteProducto(Producto elemento);
     public void updateProducto(Producto elemento);    
-        
-    }
+}
