@@ -148,4 +148,8 @@ public class ProductoController implements Initializable{
         cbxCategorias.setItems(listaDescripciones);
     }
 }
+
+
+
+/*PROBANDO SUBIR EL REPOSITORIO A GIT HUB*/
   
