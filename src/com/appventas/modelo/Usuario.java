@@ -21,22 +21,22 @@ import javax.persistence.Table;
 @Table(name="usuario")
 @NamedQueries({@NamedQuery(name="Usuario.findAll",query="from Usuario")})
 public class Usuario implements Serializable {
-    private final IntegerProperty id;
+    private final IntegerProperty id_Usuario;
     private final StringProperty nombre;
     private final StringProperty login;
     private final StringProperty password;
     private final StringProperty email;
     private Rol rol;
     public Usuario() {
-        this.id = new SimpleIntegerProperty();
+        this.id_Usuario = new SimpleIntegerProperty();
         this.nombre = new SimpleStringProperty("");
         this.login = new SimpleStringProperty("");
         this.password = new SimpleStringProperty("");
         this.email = new SimpleStringProperty("");
     }
 
-    public Usuario(int id, String nombre, String login, String password, String email) {
-        this.id = new SimpleIntegerProperty(id);
+    public Usuario(int id_Usuario, String nombre, String login, String password, String email) {
+        this.id_Usuario = new SimpleIntegerProperty(id_Usuario);
         this.nombre = new SimpleStringProperty(nombre);
         this.login = new SimpleStringProperty(login);
         this.password = new SimpleStringProperty(password);
@@ -45,14 +45,14 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_usuario")
-    public int getId(){
-        return id.get();
+    public int getId_Usuario(){
+        return id_Usuario.get();
     }
-    public void setId(int id){
-        this.id.set(id);
+    public void setId_Usuario(int id_Usuario){
+        this.id_Usuario.set(id_Usuario);
     }
-    public IntegerProperty id(){
-        return this.id;
+    public IntegerProperty Id_Usuario(){
+        return this.id_Usuario;
     }
     @Column(name="nombre")
     public String getNombre() {
@@ -116,6 +116,6 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", login=" + login + ", password=" + password + ", email=" + email + ", rol=" + rol + '}';
+        return "Usuario{" + "id_Usuario=" + id_Usuario + ", nombre=" + nombre + ", login=" + login + ", password=" + password + ", email=" + email + ", rol=" + rol + '}';
     }
 }

@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.appventas.controller.ProductoController">
    <children>
@@ -23,10 +24,22 @@
          </columns>
       </TableView>
       <TextField fx:id="txtDescripcion" disable="true" layoutX="145.0" layoutY="14.0" prefHeight="25.0" prefWidth="392.0" />
-      <Button fx:id="btnNuevo" layoutX="15.0" layoutY="361.0" mnemonicParsing="false" onAction="#nuevo" text="Nuevo" />
-      <Button fx:id="btnGuardar" disable="true" layoutX="102.0" layoutY="361.0" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
-      <Button fx:id="btnCancelar" disable="true" layoutX="196.0" layoutY="361.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
-      <Button fx:id="btnEliminar" layoutX="292.0" layoutY="361.0" mnemonicParsing="false" onAction="#eliminar" text="Eliminar" />
+      <Button fx:id="btnNuevo" layoutX="15.0" layoutY="361.0" mnemonicParsing="false" onAction="#nuevo" text="Nuevo">
+         <font>
+            <Font name="Arimo Bold" size="13.0" />
+         </font></Button>
+      <Button fx:id="btnGuardar" disable="true" layoutX="80.0" layoutY="361.0" mnemonicParsing="false" onAction="#guardar" text="Guardar">
+         <font>
+            <Font name="Arimo Bold" size="13.0" />
+         </font></Button>
+      <Button fx:id="btnCancelar" disable="true" layoutX="157.0" layoutY="361.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar">
+         <font>
+            <Font name="Arimo Bold" size="13.0" />
+         </font></Button>
+      <Button fx:id="btnEliminar" layoutX="237.0" layoutY="361.0" mnemonicParsing="false" onAction="#eliminar" text="Eliminar">
+         <font>
+            <Font name="Arimo Bold" size="13.0" />
+         </font></Button>
       <TextField fx:id="txtPrecio" disable="true" layoutX="145.0" layoutY="46.0" prefHeight="25.0" prefWidth="115.0" />
       <Label layoutX="64.0" layoutY="88.0" text="Existencias" />
       <TextField fx:id="txtExistencias" disable="true" layoutX="145.0" layoutY="83.0" prefHeight="25.0" prefWidth="115.0" />
@@ -34,6 +47,9 @@
       <TextField fx:id="txtPrecioUnitario" disable="true" layoutX="409.0" layoutY="46.0" prefHeight="25.0" prefWidth="128.0" />
       <Label layoutX="303.0" layoutY="94.0" text="Categorias" />
       <ComboBox fx:id="cbxCategorias" disable="true" layoutX="409.0" layoutY="82.0" prefHeight="25.0" prefWidth="128.0" />
-      <Button fx:id="btnEditar" layoutX="381.0" layoutY="361.0" mnemonicParsing="false" onAction="#modificar" onKeyReleased="#seleccionarElemento" onMouseClicked="#seleccionarElemento" text="Modificar" />
+      <Button fx:id="btnEditar" layoutX="314.0" layoutY="361.0" mnemonicParsing="false" onAction="#modificar" onKeyReleased="#seleccionarElemento" onMouseClicked="#seleccionarElemento" text="Modificar">
+         <font>
+            <Font name="Arimo Bold" size="13.0" />
+         </font></Button>
    </children>
 </AnchorPane>

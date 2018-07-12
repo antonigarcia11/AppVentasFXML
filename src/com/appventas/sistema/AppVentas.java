@@ -3,6 +3,8 @@ package com.appventas.sistema;
 
 import com.appventas.controller.CategoriaController;
 import com.appventas.controller.ProductoController;
+import com.appventas.controller.RolController;
+import com.appventas.controller.UsuarioController;
 import java.io.IOException;
 import java.io.InputStream;
 import javafx.application.Application;
@@ -24,7 +26,9 @@ public class AppVentas extends Application {
 
        //mostrarHelloWorld();
         //mostrarCategoria();
-        mostrarProducto();
+        //mostrarProducto();
+        //mostrarRol();
+        mostrarUsuario();
         
         this.escenarioPrincipal.setTitle("AppVentas");
         this.escenarioPrincipal.show();
@@ -32,8 +36,23 @@ public class AppVentas extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    private void mostrarUsuario() {
+        try {
+            UsuarioController usuarioController = (UsuarioController)
+                    cambiarEscena("Usuario.fxml", 600, 400);
+        } catch (Exception e) {
+        }
+    }
 
-   public void mostrarCategoria() {
+    public void mostrarRol(){
+        try{
+            RolController rolController = (RolController)
+                    cambiarEscena("Roles.fxml", 600, 400);
+        } catch (Exception e) {            
+        }
+    }
+
+    public void mostrarCategoria() {
         try {
             CategoriaController categoriaController = (CategoriaController) 
                     cambiarEscena("Categoria.fxml", 600, 400);
@@ -42,7 +61,7 @@ public class AppVentas extends Application {
         }
     }
     
-    private void mostrarProducto() {
+    public  void mostrarProducto() {
         try {
             ProductoController productoController = (ProductoController)
                 cambiarEscena("Producto.fxml", 600,400);
@@ -67,6 +86,7 @@ public class AppVentas extends Application {
         return resultado;
     }
 
+    
     
    
 
